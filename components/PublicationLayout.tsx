@@ -1,72 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import Header from './Header';
-import images from '../assets/images';
+import { StyleSheet, ScrollView } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
-interface UserResponse {
-	id: number;
-	name: string;
-	company: CompanyResponse;
-}
-
-interface PostResponse {
-	id: number;
-	userId: number;
-	body: string;
-	title: string;
-}
-
-interface Post {
-	id: number;
-	author: string;
-	company: string;
-	title: string;
-	body: string;
-	photoUrl: string;
-}
-
-interface CompanyResponse {
-	name: string;
-	catchPhrase: string;
-	bs: string;
-}
-
-interface PhotoResponse {
-	id: number;
-	albumId: number;
-	thumbnailUrl: string;
-}
+import { Publication } from './PublicationLayout.model';
 
 // @ts-ignore
-export default function PublicationLayout({ navigation }) {
-	const [posts, setPosts] = useState<Post[]>([]);
-
-	function logOut() {
-		navigation.goBack();
-	}
+export default function PublicationLayout() {
+	const [posts, setPosts] = useState<Publication.Post[]>([]);
 
 	/**
 	 * For getting posts from server and setting into state
 	 */
 	async function fetchData(): Promise<void> {
-		const posts: Post[] = await Promise.all([
-			fetchByRoute<UserResponse[]>('users'),
-			fetchByRoute<PostResponse[]>('posts'),
-			fetchByRoute<PhotoResponse[]>('photos'),
+		const posts: Publication.Post[] = await Promise.all([
+			fetchByRoute<Publication.UserResponse[]>('users'),
+			fetchByRoute<Publication.PostResponse[]>('posts'),
+			fetchByRoute<Publication.PhotoResponse[]>('photos'),
 		]).then(
 			([users, posts, photos]: [
-				UserResponse[],
-				PostResponse[],
-				PhotoResponse[]
-			]): Post[] => {
+				Publication.UserResponse[],
+				Publication.PostResponse[],
+				Publication.PhotoResponse[]
+			]): Publication.Post[] => {
 				return users
-					.map((user: UserResponse): Post | null => {
+					.map((user: Publication.UserResponse): Publication.Post | null => {
 						return preparePost(user, posts, photos);
 					})
-					.filter(Boolean) as Post[];
+					.filter(Boolean) as Publication.Post[];
 			}
 		);
-		console.log(posts);
+
 		setPosts(prevPosts => posts);
 
 		/**
@@ -82,16 +44,16 @@ export default function PublicationLayout({ navigation }) {
 
 		/**
 		 * For preparing post to match Post interface
-		 * @param {UserResponse} user
-		 * @param {PostResponse[]} posts
-		 * @param {PhotoResponse[]} photos
-		 * @returns {Post | null}
+		 * @param {Publication.UserResponse} user
+		 * @param {Publication.PostResponse[]} posts
+		 * @param {Publication.PhotoResponse[]} photos
+		 * @returns {Publication.Post | null}
 		 */
 		function preparePost(
-			user: UserResponse,
-			posts: PostResponse[],
-			photos: PhotoResponse[]
-		): Post | null {
+			user: Publication.UserResponse,
+			posts: Publication.PostResponse[],
+			photos: Publication.PhotoResponse[]
+		): Publication.Post | null {
 			const post = posts.find(el => user?.id === el?.userId);
 			const photo = photos.find(el => user?.id === el?.albumId);
 
@@ -115,26 +77,22 @@ export default function PublicationLayout({ navigation }) {
 	}, []);
 
 	return (
-		<View style={styles.publicationContainer}>
-			<Header exit={images} logout={logOut} />
-
-			<ScrollView>
-				{posts.length ? (
-					posts.map(post => {
-						return (
-							<Card style={styles.cardContainer} key={post.id}>
-								<Card.Title title={post.author} subtitle={post.company} />
-								<Card.Content>
-									<Paragraph>{post.title}</Paragraph>
-								</Card.Content>
-							</Card>
-						);
-					})
-				) : (
-					<Paragraph>'Your posts are loading...'</Paragraph>
-				)}
-			</ScrollView>
-		</View>
+		<ScrollView>
+			{posts.length ? (
+				posts.map(post => {
+					return (
+						<Card style={styles.cardContainer} key={post.id}>
+							<Card.Title title={post.author} subtitle={post.company} />
+							<Card.Content>
+								<Paragraph>{post.title}</Paragraph>
+							</Card.Content>
+						</Card>
+					);
+				})
+			) : (
+				<Paragraph>'Your posts are loading...'</Paragraph>
+			)}
+		</ScrollView>
 	);
 }
 
@@ -155,5 +113,12 @@ const styles = StyleSheet.create({
 		marginRight: 15,
 		marginBottom: 10,
 		marginLeft: 13,
+		borderColor: '#27569C',
+		borderRadius: 6,
+		borderWidth: 5,
+		shadowColor: '#000000',
+		shadowOffset: { width: 4, height: 4 },
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
 	},
 });

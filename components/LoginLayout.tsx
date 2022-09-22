@@ -6,67 +6,74 @@ import {
 	TextInput,
 	TouchableOpacity,
 } from 'react-native';
-import Header from './Header';
 
 // @ts-ignore
 export default function LoginLayout({ navigation }) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
-	function OnSubmit(login: string, password: string) {
+	/**
+	 * Function for submitting form data
+	 * @param {string} login
+	 * @param {string} password
+	 */
+	function onSubmit(login: string, password: string): void {
 		validate(login, password);
 	}
 
+	/**
+	 * Function for validating form data
+	 * @param {string} login
+	 * @param {string} password
+	 */
 	function validate(login: string, password: string) {
 		const user = '';
 		const userPassword = '';
+
 		if (login === user && password === userPassword) {
 			navigation.navigate('PostsPage');
 		} else {
 			alert('Username or password entered incorrectly');
 		}
 	}
-	return (
-		<View>
-			<Header />
 
-			<View style={styles.inputContainer}>
-				<View style={styles.titleContainer}>
-					<Text style={styles.title}>Autorization</Text>
-				</View>
-				<View style={styles.inputWrapper}>
-					<Text style={styles.inputField}>login</Text>
-					<View style={styles.inputView}>
-						<TextInput
-							underlineColorAndroid={'transparent'}
-							autoCapitalize='none'
-							style={styles.TextInput}
-							placeholderTextColor='#003f5c'
-							onChangeText={login => setLogin(login)}
-						/>
-					</View>
-				</View>
-				<View style={styles.inputWrapper}>
-					<Text style={styles.inputField}>password</Text>
-					<View style={styles.inputView}>
-						<TextInput
-							underlineColorAndroid={'transparent'}
-							autoCapitalize='none'
-							style={styles.TextInput}
-							placeholderTextColor='#003f5c'
-							secureTextEntry={true}
-							onChangeText={password => setPassword(password)}
-						/>
-					</View>
-				</View>
-				<TouchableOpacity
-					style={styles.loginBtn}
-					onPress={() => {
-						OnSubmit(password, login);
-					}}>
-					<Text style={styles.btnText}>Submit</Text>
-				</TouchableOpacity>
+	return (
+		<View style={styles.inputContainer}>
+			<View style={styles.titleContainer}>
+				<Text style={styles.title}>Autorization</Text>
 			</View>
+			<View style={styles.inputWrapper}>
+				<Text style={styles.inputField}>login</Text>
+				<View style={styles.inputView}>
+					<TextInput
+						underlineColorAndroid={'transparent'}
+						autoCapitalize='none'
+						style={styles.TextInput}
+						placeholderTextColor='#003f5c'
+						onChangeText={login => setLogin(login)}
+					/>
+				</View>
+			</View>
+			<View style={styles.inputWrapper}>
+				<Text style={styles.inputField}>password</Text>
+				<View style={styles.inputView}>
+					<TextInput
+						underlineColorAndroid={'transparent'}
+						autoCapitalize='none'
+						style={styles.TextInput}
+						placeholderTextColor='#003f5c'
+						secureTextEntry={true}
+						onChangeText={password => setPassword(password)}
+					/>
+				</View>
+			</View>
+			<TouchableOpacity
+				style={styles.loginBtn}
+				onPress={() => {
+					onSubmit(password, login);
+				}}>
+				<Text style={styles.btnText}>Submit</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
@@ -84,6 +91,10 @@ const styles = StyleSheet.create({
 		paddingLeft: 42,
 		alignItems: 'center',
 		margin: 15,
+		shadowColor: '#000000',
+		shadowOffset: { width: 4, height: 4 },
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
 	},
 	inputView: {
 		backgroundColor: '#D9D9D9',
