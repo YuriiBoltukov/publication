@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
 import { Publication } from '../models/PublicationLayoutModel';
 import { publicationStyle } from '../styles/publicationLayoutStyle';
+import { ProgressBar, MD3Colors } from 'react-native-paper';
 
 export default function PublicationLayout() {
 	const [posts, setPosts] = useState<Publication.Post[]>([]);
@@ -91,7 +92,10 @@ export default function PublicationLayout() {
 					);
 				})
 			) : (
-				<Paragraph>'Your posts are loading...'</Paragraph>
+				<>
+					<ProgressBar indeterminate color={MD3Colors.secondary50} />
+					<Paragraph>'Your posts are loading...'</Paragraph>
+				</>
 			)}
 		</ScrollView>
 	);
