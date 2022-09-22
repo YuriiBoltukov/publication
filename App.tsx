@@ -1,15 +1,13 @@
-import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet } from 'react-native';
 import LoginLayout from './components/LoginLayout';
 import PublicationLayout from './components/PublicationLayout';
-import { RootStackParamList } from './components/RootStackParams';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import 'react-native-gesture-handler';
+const Stack = createNativeStackNavigator();
 
-const Stack = createStackNavigator<RootStackParamList>();
-
-export default function App() {
+function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
@@ -17,6 +15,20 @@ export default function App() {
 				<Stack.Screen name='PostsPage' component={PublicationLayout} />
 			</Stack.Navigator>
 		</NavigationContainer>
+		/* 	<>
+			<Stack.Navigator>
+				<Stack.Screen name='Auth' component={LoginLayout} />
+			</Stack.Navigator>
+
+			<View>
+				<LoginLayout />
+			</View>
+		</> */
+		//<Stack.Navigator>
+		// <Stack.Screen name='Auth' component={LoginLayout} />
+		// <Stack.Screen name='PostsPage' component={PublicationLayout} />
+
+		//</Stack.Navigator>
 	);
 }
 
@@ -28,3 +40,5 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 });
+
+export default App;

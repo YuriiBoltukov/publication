@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from './Header';
 import images from '../assets/images';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './RootStackParams';
 import { Card, Paragraph } from 'react-native-paper';
 interface UserResponse {
 	id: number;
@@ -39,14 +36,15 @@ interface PhotoResponse {
 	albumId: number;
 	thumbnailUrl: string;
 }
-type mainScreenProp = StackNavigationProp<RootStackParamList, 'PostsPage'>;
-export default function PublicationLayout() {
-	const navigation = useNavigation<mainScreenProp>();
+
+// @ts-ignore
+export default function PublicationLayout({ navigation }) {
 	const [posts, setPosts] = useState<Post[]>([]);
 
 	function logOut() {
-		navigation.navigate('Auth');
+		navigation.goBack();
 	}
+
 	/**
 	 * For getting posts from server and setting into state
 	 */
@@ -111,6 +109,7 @@ export default function PublicationLayout() {
 			};
 		}
 	}
+
 	useEffect(() => {
 		fetchData();
 	}, []);
@@ -118,20 +117,23 @@ export default function PublicationLayout() {
 	return (
 		<View style={styles.publicationContainer}>
 			<Header exit={images} logout={logOut} />
-			<View>
-				{posts.length
-					? posts.map(post => {
-							return (
-								<Card style={styles.cardContainer} key={post.id}>
-									<Card.Title title={post.author} subtitle={post.company} />
-									<Card.Content>
-										<Paragraph>{post.title}</Paragraph>
-									</Card.Content>
-								</Card>
-							);
-					  })
-					: 'Your posts are loading...'}
-			</View>
+
+			<ScrollView>
+				{posts.length ? (
+					posts.map(post => {
+						return (
+							<Card style={styles.cardContainer} key={post.id}>
+								<Card.Title title={post.author} subtitle={post.company} />
+								<Card.Content>
+									<Paragraph>{post.title}</Paragraph>
+								</Card.Content>
+							</Card>
+						);
+					})
+				) : (
+					<Paragraph>'Your posts are loading...'</Paragraph>
+				)}
+			</ScrollView>
 		</View>
 	);
 }
@@ -148,9 +150,6 @@ const styles = StyleSheet.create({
 		fontWeight: '800',
 		fontSize: 16,
 		lineHeight: 19,
-		flex: 1,
-		textAlign: 'center',
-		alignItems: 'center',
 		color: '#000000',
 		marginTop: 10,
 		marginRight: 15,

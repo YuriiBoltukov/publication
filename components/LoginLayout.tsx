@@ -7,13 +7,9 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import Header from './Header';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './RootStackParams';
 
-type authScreenProp = StackNavigationProp<RootStackParamList, 'Auth'>;
-
-export default function LoginLayout() {
+// @ts-ignore
+export default function LoginLayout({ navigation }) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -22,9 +18,8 @@ export default function LoginLayout() {
 	}
 
 	function validate(login: string, password: string) {
-		const navigation = useNavigation<authScreenProp>();
-		const user = 'admin';
-		const userPassword = 'admin';
+		const user = '';
+		const userPassword = '';
 		if (login === user && password === userPassword) {
 			navigation.navigate('PostsPage');
 		} else {
@@ -65,10 +60,10 @@ export default function LoginLayout() {
 					</View>
 				</View>
 				<TouchableOpacity
+					style={styles.loginBtn}
 					onPress={() => {
 						OnSubmit(password, login);
-					}}
-					style={styles.loginBtn}>
+					}}>
 					<Text style={styles.btnText}>Submit</Text>
 				</TouchableOpacity>
 			</View>
