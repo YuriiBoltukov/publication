@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
-import { Publication } from './PublicationLayout.model';
+import { Publication } from '../models/PublicationLayoutModel';
+import { publicationStyle } from '../styles/publicationLayoutStyle';
 
-// @ts-ignore
 export default function PublicationLayout() {
 	const [posts, setPosts] = useState<Publication.Post[]>([]);
 
@@ -36,10 +36,11 @@ export default function PublicationLayout() {
 		 * @param {string} route
 		 * @returns {Promise<T>}
 		 */
-		function fetchByRoute<T>(route: string): Promise<T> {
-			return fetch(`https://jsonplaceholder.typicode.com/${route}`).then(
-				response => response.json()
+		async function fetchByRoute<T>(route: string): Promise<T> {
+			const response = await fetch(
+				`https://jsonplaceholder.typicode.com/${route}`
 			);
+			return await response.json();
 		}
 
 		/**
@@ -72,7 +73,7 @@ export default function PublicationLayout() {
 		}
 	}
 
-	useEffect(() => {
+	useEffect((): void => {
 		fetchData();
 	}, []);
 
@@ -81,7 +82,7 @@ export default function PublicationLayout() {
 			{posts.length ? (
 				posts.map(post => {
 					return (
-						<Card style={styles.cardContainer} key={post.id}>
+						<Card style={publicationStyle.cardContainer} key={post.id}>
 							<Card.Title title={post.author} subtitle={post.company} />
 							<Card.Content>
 								<Paragraph>{post.title}</Paragraph>
@@ -95,30 +96,3 @@ export default function PublicationLayout() {
 		</ScrollView>
 	);
 }
-
-const styles = StyleSheet.create({
-	publicationContainer: {
-		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: '#F5FCFF',
-	},
-	cardContainer: {
-		fontFamily: 'Inter',
-		fontStyle: 'normal',
-		fontWeight: '800',
-		fontSize: 16,
-		lineHeight: 19,
-		color: '#000000',
-		marginTop: 10,
-		marginRight: 15,
-		marginBottom: 10,
-		marginLeft: 13,
-		borderColor: '#27569C',
-		borderRadius: 6,
-		borderWidth: 5,
-		shadowColor: '#000000',
-		shadowOffset: { width: 4, height: 4 },
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-	},
-});

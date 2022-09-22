@@ -1,10 +1,9 @@
-import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { loginLayoutStyle } from '../styles/LoginLayoutStyle';
+import { loginLayoutStyle } from '../styles/loginLayoutStyle';
 
-export default function LoginLayout({ navigation }: NativeStackHeaderProps) {
+export default function LoginLayout({ navigation }: any) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 	const [visible, setVisible] = React.useState(false);
@@ -37,7 +36,7 @@ export default function LoginLayout({ navigation }: NativeStackHeaderProps) {
 	 * @param {string} login
 	 * @param {string} password
 	 */
-	function validate(login: string, password: string) {
+	function validate(login: string, password: string): void {
 		const user = '';
 		const userPassword = '';
 
@@ -88,7 +87,7 @@ export default function LoginLayout({ navigation }: NativeStackHeaderProps) {
 			<Snackbar
 				visible={visible}
 				onDismiss={onDismissSnackBar}
-				duration={9000}
+				duration={3000}
 				action={{
 					label: 'Error',
 					onPress: () => {},
