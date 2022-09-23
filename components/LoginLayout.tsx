@@ -7,6 +7,7 @@ export default function LoginLayout({ navigation }: any) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 	const [visible, setVisible] = React.useState(false);
+	const isMobile: boolean = window.innerWidth <= 510;
 
 	/**
 	 * Function for toggling snack bar
@@ -37,8 +38,8 @@ export default function LoginLayout({ navigation }: any) {
 	 * @param {string} password
 	 */
 	function validate(login: string, password: string): void {
-		const user = '';
-		const userPassword = '';
+		const user = 'admin';
+		const userPassword = 'admin';
 
 		if (login === user && password === userPassword) {
 			navigation.navigate('PostsPage');

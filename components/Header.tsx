@@ -2,7 +2,7 @@ import { View, Image } from 'react-native';
 import { headerStyle } from '../styles/headerStyle';
 import { TouchableOpacity } from 'react-native';
 
-export default function Header(props: any) {
+export default function Header(props?: any) {
 	const logo = (
 		<View style={headerStyle.header}>
 			<Image style={headerStyle.img} source={require('../assets/logo-1.png')} />

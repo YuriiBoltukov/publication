@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Image } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
-import { Publication } from '../models/PublicationLayoutModel';
+import { Publication } from '../models/publicationLayoutModel';
 import { publicationStyle } from '../styles/publicationLayoutStyle';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 
 export default function PublicationLayout() {
 	const [posts, setPosts] = useState<Publication.Post[]>([]);
+	const [width, setWidth] = useState({ width: window.innerWidth });
+
+	/**
+	 * For checking device width
+	 * @returns boolean
+	 */
+	function isMobile(): boolean {
+		return width.width <= 670;
+	}
 
 	/**
 	 * For getting posts from server and setting into state
@@ -76,27 +85,55 @@ export default function PublicationLayout() {
 
 	useEffect((): void => {
 		fetchData();
+		setWidth({ width: window.innerWidth });
 	}, []);
 
 	return (
-		<ScrollView>
-			{posts.length ? (
-				posts.map(post => {
-					return (
-						<Card style={publicationStyle.cardContainer} key={post.id}>
-							<Card.Title title={post.author} subtitle={post.company} />
-							<Card.Content>
-								<Paragraph>{post.title}</Paragraph>
-							</Card.Content>
-						</Card>
-					);
-				})
+		<>
+			{isMobile() ? (
+				<ScrollView>
+					{posts.length ? (
+						posts.map(post => {
+							return (
+								<Card style={publicationStyle.cardContainer} key={post.id}>
+									<Card.Title title={post.author} subtitle={post.company} />
+									<Card.Content>
+										<Paragraph>{post.title}</Paragraph>
+									</Card.Content>
+								</Card>
+							);
+						})
+					) : (
+						<>
+							<ProgressBar indeterminate color={MD3Colors.secondary50} />
+							<Paragraph>'Your posts are loading...'</Paragraph>
+						</>
+					)}
+				</ScrollView>
 			) : (
-				<>
-					<ProgressBar indeterminate color={MD3Colors.secondary50} />
-					<Paragraph>'Your posts are loading...'</Paragraph>
-				</>
+				<ScrollView>
+					{posts.length ? (
+						posts.map(post => {
+							return (
+								<Card style={publicationStyle.cardContainer} key={post.id}>
+									<Card.Content>
+										<Image source={{ uri: post.photoUrl }} />
+									</Card.Content>
+									<Card.Title title={post.author} subtitle={post.company} />
+									<Card.Content>
+										<Paragraph>{post.title}</Paragraph>
+									</Card.Content>
+								</Card>
+							);
+						})
+					) : (
+						<>
+							<ProgressBar indeterminate color={MD3Colors.secondary50} />
+							<Paragraph>'Your posts are loading...'</Paragraph>
+						</>
+					)}
+				</ScrollView>
 			)}
-		</ScrollView>
+		</>
 	);
 }
