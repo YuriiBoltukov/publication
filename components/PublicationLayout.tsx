@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Image, View } from 'react-native';
+import { ScrollView, Image } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
 import { Publication } from '../models/publicationLayoutModel';
 import { publicationStyle } from '../styles/publicationLayoutStyle';

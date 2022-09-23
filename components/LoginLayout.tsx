@@ -1,4 +1,3 @@
-import { useFocusEffect } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Snackbar } from 'react-native-paper';
@@ -72,17 +71,19 @@ export default function LoginLayout({ navigation }: any) {
 
 	useEffect(() => {
 		setWidth({ width: window.innerWidth });
-	});
+	}, []);
 
 	return (
-		<View>
+		<View style={getStyle().container}>
 			<View style={getStyle().inputContainer}>
 				<View style={loginLayoutStyle.titleContainer}>
 					<Text style={loginLayoutStyle.title}>Autorization</Text>
 				</View>
-				<View style={[loginLayoutStyle.inputWrapper, getStyle()]}>
-					<Text style={[loginLayoutStyle.inputField, getStyle()]}>login</Text>
-					<View style={[loginLayoutStyle.inputView, getStyle()]}>
+				<View style={[loginLayoutStyle.inputWrapper, getStyle().inputWrapper]}>
+					<Text style={[loginLayoutStyle.inputField, getStyle().inputField]}>
+						login
+					</Text>
+					<View style={loginLayoutStyle.inputView}>
 						<TextInput
 							underlineColorAndroid={'transparent'}
 							autoCapitalize='none'
@@ -92,11 +93,11 @@ export default function LoginLayout({ navigation }: any) {
 						/>
 					</View>
 				</View>
-				<View style={[loginLayoutStyle.inputWrapper, getStyle()]}>
-					<Text style={[loginLayoutStyle.inputField, getStyle()]}>
+				<View style={[loginLayoutStyle.inputWrapper, getStyle().inputWrapper]}>
+					<Text style={[loginLayoutStyle.inputField, getStyle().inputField]}>
 						password
 					</Text>
-					<View style={[loginLayoutStyle.inputView, getStyle()]}>
+					<View style={loginLayoutStyle.inputView}>
 						<TextInput
 							underlineColorAndroid={'transparent'}
 							autoCapitalize='none'

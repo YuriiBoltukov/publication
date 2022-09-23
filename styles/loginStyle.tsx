@@ -41,16 +41,7 @@ export const loginLayoutStyle = StyleSheet.create<Style>({
 		textAlign: 'center',
 		color: '#27569C',
 	},
-	inputField: {
-		fontFamily: 'inter',
-		fontStyle: 'normal',
-		fontWeight: '800',
-		fontSize: 24,
-		lineHeight: 29,
-		display: 'flex',
-		alignItems: 'center',
-		color: '#000000',
-	},
+
 	btnText: {
 		fontFamily: 'inter',
 		fontStyle: 'normal',
@@ -61,9 +52,7 @@ export const loginLayoutStyle = StyleSheet.create<Style>({
 		alignItems: 'center',
 		color: '#000000',
 	},
-	inputWrapper: {
-		width: 212,
-	},
+
 	titleContainer: {
 		width: 440,
 		height: 45,
@@ -89,14 +78,15 @@ export const loginStyleMobile = StyleSheet.create<Style>({
 		shadowOffset: { width: 4, height: 4 },
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
+	},
+	container: {
 		alignSelf: 'center',
-		justifyContent: 'space-around',
 	},
 });
 
 export const loginStyleTablet = StyleSheet.create<Style>({
 	inputContainer: {
-		width: 290,
+		width: 480,
 		height: 330,
 		flex: 4,
 		backgroundColor: '#fff',
@@ -113,5 +103,26 @@ export const loginStyleTablet = StyleSheet.create<Style>({
 		shadowOffset: { width: 4, height: 4 },
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
+	},
+	container: {
+		alignSelf: 'center',
+		marginVertical: 'auto',
+	},
+	inputWrapper: {
+		width: '100%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginTop: 25,
+		alignItems: 'baseline',
+	},
+	inputField: {
+		fontFamily: 'inter',
+		fontStyle: 'normal',
+		fontWeight: '800',
+		fontSize: 24,
+		lineHeight: 29,
+		display: 'flex',
+		paddingHorizontal: 28,
+		color: '#000000',
 	},
 });

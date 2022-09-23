@@ -5,18 +5,26 @@ import { TouchableOpacity } from 'react-native';
 export default function Header(props?: any) {
 	const logo = (
 		<View style={headerStyle.header}>
-			<Image style={headerStyle.img} source={require('../assets/logo-1.png')} />
+			<Image style={headerStyle.img} source={require('../assets/logo1.png')} />
 		</View>
 	);
 
 	const exitbtn = (
 		<View style={headerStyle.header}>
-			<Image style={headerStyle.img} source={require('../assets/logo-1.png')} />
+			<Image
+				style={headerStyle.img}
+				accessibilityLabel={'logo'}
+				source={require('../assets/logo1.png')}
+			/>
 			<TouchableOpacity
 				onPress={() => {
 					props.navigation.navigate('Auth');
 				}}>
-				<Image style={headerStyle.exitBtn} source={props?.exit?.exitImg} />
+				<Image
+					style={headerStyle.exitBtn}
+					accessibilityLabel={'logo'}
+					source={props?.exit?.exitImg}
+				/>
 			</TouchableOpacity>
 		</View>
 	);

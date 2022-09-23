@@ -24,8 +24,7 @@ export const publicationStyle = StyleSheet.create({
 		shadowOffset: { width: 4, height: 4 },
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
-		maxWidth: 325,
-		height: 470,
+		width: 325,
 	},
 	content: {
 		fontFamily: 'inter',
