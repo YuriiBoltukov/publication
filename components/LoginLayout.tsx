@@ -2,7 +2,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { loginLayoutStyle } from '../styles/loginLayoutStyle';
+import {
+	loginLayoutStyle,
+	loginStyleMobile,
+	loginStyleTablet,
+	Style,
+} from '../styles/loginStyle';
 
 export default function LoginLayout({ navigation }: any) {
 	const [login, setLogin] = useState('');
@@ -11,7 +16,7 @@ export default function LoginLayout({ navigation }: any) {
 	const [width, setWidth] = useState({ width: window.innerWidth });
 
 	/**
-	 * For checking device width
+	 * Function for checking device width
 	 * @returns boolean
 	 */
 	function isMobile(): boolean {
@@ -56,57 +61,70 @@ export default function LoginLayout({ navigation }: any) {
 			onToggleSnackBar();
 		}
 	}
+
+	/**
+	 * Function for defining style object by device type
+	 * @returns {Style}
+	 */
+	function getStyle(): Style {
+		return isMobile() ? loginStyleMobile : loginStyleTablet;
+	}
+
 	useEffect(() => {
 		setWidth({ width: window.innerWidth });
 	});
 
 	return (
-		<View style={loginLayoutStyle.inputContainer}>
-			<View style={loginLayoutStyle.titleContainer}>
-				<Text style={loginLayoutStyle.title}>Autorization</Text>
-			</View>
-			<View style={loginLayoutStyle.inputWrapper}>
-				<Text style={loginLayoutStyle.inputField}>login</Text>
-				<View style={loginLayoutStyle.inputView}>
-					<TextInput
-						underlineColorAndroid={'transparent'}
-						autoCapitalize='none'
-						style={loginLayoutStyle.TextInput}
-						placeholderTextColor='#003f5c'
-						onChangeText={login => setLogin(login)}
-					/>
+		<View>
+			<View style={getStyle().inputContainer}>
+				<View style={loginLayoutStyle.titleContainer}>
+					<Text style={loginLayoutStyle.title}>Autorization</Text>
 				</View>
-			</View>
-			<View style={loginLayoutStyle.inputWrapper}>
-				<Text style={loginLayoutStyle.inputField}>password</Text>
-				<View style={loginLayoutStyle.inputView}>
-					<TextInput
-						underlineColorAndroid={'transparent'}
-						autoCapitalize='none'
-						style={loginLayoutStyle.TextInput}
-						placeholderTextColor='#003f5c'
-						secureTextEntry={true}
-						onChangeText={password => setPassword(password)}
-					/>
+				<View style={[loginLayoutStyle.inputWrapper, getStyle()]}>
+					<Text style={[loginLayoutStyle.inputField, getStyle()]}>login</Text>
+					<View style={[loginLayoutStyle.inputView, getStyle()]}>
+						<TextInput
+							underlineColorAndroid={'transparent'}
+							autoCapitalize='none'
+							style={loginLayoutStyle.TextInput}
+							placeholderTextColor='#003f5c'
+							onChangeText={login => setLogin(login)}
+						/>
+					</View>
 				</View>
+				<View style={[loginLayoutStyle.inputWrapper, getStyle()]}>
+					<Text style={[loginLayoutStyle.inputField, getStyle()]}>
+						password
+					</Text>
+					<View style={[loginLayoutStyle.inputView, getStyle()]}>
+						<TextInput
+							underlineColorAndroid={'transparent'}
+							autoCapitalize='none'
+							style={loginLayoutStyle.TextInput}
+							placeholderTextColor='#003f5c'
+							secureTextEntry={true}
+							onChangeText={password => setPassword(password)}
+						/>
+					</View>
+				</View>
+				<TouchableOpacity
+					style={[loginLayoutStyle.loginBtn, getStyle()]}
+					onPress={() => {
+						onSubmit(password, login);
+					}}>
+					<Text style={loginLayoutStyle.btnText}>Submit</Text>
+				</TouchableOpacity>
+				<Snackbar
+					visible={visible}
+					onDismiss={onDismissSnackBar}
+					duration={3000}
+					action={{
+						label: 'Error',
+						onPress: () => {},
+					}}>
+					Username or password entered incorrectly
+				</Snackbar>
 			</View>
-			<TouchableOpacity
-				style={loginLayoutStyle.loginBtn}
-				onPress={() => {
-					onSubmit(password, login);
-				}}>
-				<Text style={loginLayoutStyle.btnText}>Submit</Text>
-			</TouchableOpacity>
-			<Snackbar
-				visible={visible}
-				onDismiss={onDismissSnackBar}
-				duration={3000}
-				action={{
-					label: 'Error',
-					onPress: () => {},
-				}}>
-				Username or password entered incorrectly
-			</Snackbar>
 		</View>
 	);
 }
