@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { loginLayoutStyle } from '../styles/loginLayoutStyle';
@@ -6,8 +7,16 @@ import { loginLayoutStyle } from '../styles/loginLayoutStyle';
 export default function LoginLayout({ navigation }: any) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
-	const [visible, setVisible] = React.useState(false);
-	const isMobile: boolean = window.innerWidth <= 510;
+	const [visible, setVisible] = useState(false);
+	const [width, setWidth] = useState({ width: window.innerWidth });
+
+	/**
+	 * For checking device width
+	 * @returns boolean
+	 */
+	function isMobile(): boolean {
+		return width.width <= 480;
+	}
 
 	/**
 	 * Function for toggling snack bar
@@ -47,6 +56,9 @@ export default function LoginLayout({ navigation }: any) {
 			onToggleSnackBar();
 		}
 	}
+	useEffect(() => {
+		setWidth({ width: window.innerWidth });
+	});
 
 	return (
 		<View style={loginLayoutStyle.inputContainer}>

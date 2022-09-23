@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView, Image, View } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
 import { Publication } from '../models/publicationLayoutModel';
 import { publicationStyle } from '../styles/publicationLayoutStyle';
-import { ProgressBar, MD3Colors } from 'react-native-paper';
+import { ProgressBar, MD3Colors, List } from 'react-native-paper';
 
 export default function PublicationLayout() {
 	const [posts, setPosts] = useState<Publication.Post[]>([]);
@@ -89,51 +89,64 @@ export default function PublicationLayout() {
 	}, []);
 
 	return (
-		<>
-			{isMobile() ? (
-				<ScrollView>
-					{posts.length ? (
+		<ScrollView>
+			<List.Section style={publicationStyle.container}>
+				{posts.length ? (
+					isMobile() ? (
 						posts.map(post => {
 							return (
 								<Card style={publicationStyle.cardContainer} key={post.id}>
-									<Card.Title title={post.author} subtitle={post.company} />
+									<Card.Title
+										titleStyle={publicationStyle.content}
+										subtitleStyle={publicationStyle.content}
+										title={post.author}
+										subtitle={post.company}
+									/>
 									<Card.Content>
-										<Paragraph>{post.title}</Paragraph>
+										<Paragraph style={publicationStyle.content}>
+											{post.title}
+										</Paragraph>
 									</Card.Content>
 								</Card>
 							);
 						})
 					) : (
-						<>
-							<ProgressBar indeterminate color={MD3Colors.secondary50} />
-							<Paragraph>'Your posts are loading...'</Paragraph>
-						</>
-					)}
-				</ScrollView>
-			) : (
-				<ScrollView>
-					{posts.length ? (
 						posts.map(post => {
 							return (
 								<Card style={publicationStyle.cardContainer} key={post.id}>
 									<Card.Content>
-										<Image source={{ uri: post.photoUrl }} />
+										<Image
+											source={{ height: 150, width: 150, uri: post.photoUrl }}
+											accessibilityLabel={post.title}
+										/>
 									</Card.Content>
-									<Card.Title title={post.author} subtitle={post.company} />
+									<Card.Title
+										titleStyle={publicationStyle.content}
+										subtitleStyle={publicationStyle.content}
+										title={post.author}
+										subtitle={post.company}
+									/>
 									<Card.Content>
-										<Paragraph>{post.title}</Paragraph>
+										<Paragraph style={publicationStyle.content}>
+											{post.title}
+										</Paragraph>
+									</Card.Content>
+									<Card.Content>
+										<Paragraph style={publicationStyle.content}>
+											{post.body}
+										</Paragraph>
 									</Card.Content>
 								</Card>
 							);
 						})
-					) : (
-						<>
-							<ProgressBar indeterminate color={MD3Colors.secondary50} />
-							<Paragraph>'Your posts are loading...'</Paragraph>
-						</>
-					)}
-				</ScrollView>
-			)}
-		</>
+					)
+				) : (
+					<>
+						<ProgressBar indeterminate color={MD3Colors.secondary50} />
+						<Paragraph>'Your posts are loading...'</Paragraph>
+					</>
+				)}
+			</List.Section>
+		</ScrollView>
 	);
 }

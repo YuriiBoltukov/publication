@@ -7,7 +7,7 @@ export const publicationStyle = StyleSheet.create({
 		backgroundColor: '#F5FCFF',
 	},
 	cardContainer: {
-		fontFamily: 'Inter',
+		fontFamily: 'inter',
 		fontStyle: 'normal',
 		fontWeight: '800',
 		fontSize: 16,
@@ -24,5 +24,21 @@ export const publicationStyle = StyleSheet.create({
 		shadowOffset: { width: 4, height: 4 },
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
+		maxWidth: 325,
+		height: 470,
+	},
+	content: {
+		fontFamily: 'inter',
+		fontStyle: 'normal',
+		fontWeight: '800',
+		fontSize: 16,
+		lineHeight: 19,
+		marginTop: 5,
+	},
+	container: {
+		flex: 1,
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
 	},
 });

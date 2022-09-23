@@ -47,7 +47,7 @@ export const loginLayoutStyle = StyleSheet.create({
 		backgroundColor: '#E4B062',
 	},
 	title: {
-		fontFamily: 'Inter',
+		fontFamily: 'inter',
 		fontStyle: 'normal',
 		fontWeight: '800',
 		fontSize: 24,
@@ -58,7 +58,7 @@ export const loginLayoutStyle = StyleSheet.create({
 		color: '#27569C',
 	},
 	inputField: {
-		fontFamily: 'Inter',
+		fontFamily: 'inter',
 		fontStyle: 'normal',
 		fontWeight: '800',
 		fontSize: 24,
@@ -68,7 +68,7 @@ export const loginLayoutStyle = StyleSheet.create({
 		color: '#000000',
 	},
 	btnText: {
-		fontFamily: 'Inter',
+		fontFamily: 'inter',
 		fontStyle: 'normal',
 		fontWeight: '800',
 		fontSize: 24,
@@ -81,7 +81,7 @@ export const loginLayoutStyle = StyleSheet.create({
 		width: 212,
 	},
 	titleContainer: {
-		width: 212,
+		width: 440,
 		height: 45,
 		alignItems: 'center',
 	},
